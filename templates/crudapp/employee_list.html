@@ -1,1 +1,51 @@
-{% extends "crudapp/base.html" %}{% block title %}Employees{% endblock %}{% block content %}<div class="d-flex justify-content-between align-items-center mb-4"><div><h1 class="h3 title">Employees</h1><p class="text-secondary">Manage employee profiles and departments.</p></div><a class="btn btn-primary" href="{% url 'employee_create' %}">+ Add Employee</a></div><div class="cardx p-3 table-responsive"><table class="table align-middle"><thead><tr><th>Photo</th><th>Name</th><th>Age</th><th>Department</th><th>Gender</th><th>Hobbies</th><th>Email</th><th>Actions</th></tr></thead><tbody>{% for e in employees %}<tr><td>{% if e.profile_photo %}<img class="photo" src="{{ e.profile_photo.url }}" alt="{{ e.name }}">{% else %}—{% endif %}</td><td>{{ e.name }}</td><td>{{ e.age }}</td><td>{{ e.department.name }}</td><td>{{ e.gender }}</td><td>{{ e.hobbies|join:", "|default:"—" }}</td><td>{{ e.email }}</td><td class="text-nowrap"><a class="btn btn-sm btn-outline-primary" href="{% url 'employee_update' e.pk %}">Edit</a> <a class="btn btn-sm btn-outline-danger" href="{% url 'employee_delete' e.pk %}">Delete</a></td></tr>{% empty %}<tr><td colspan="8" class="text-center p-5">No employees yet. Create a department first, then add an employee.</td></tr>{% endfor %}</tbody></table></div>{% endblock %}
+{% extends "crudapp/base.html" %}{% block title %}Employees{% endblock %}{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 title">Employees</h1>
+        <p class="text-secondary">Manage employee profiles and departments.</p>
+    </div>
+    <a class="btn btn-primary" href="{% url 'employee_create' %}">+ Add Employee</a>
+</div>
+<div class="cardx p-3 table-responsive">
+    <table class="table align-middle">
+        <thead>
+            <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Gender</th>
+                <th>Hobbies</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in employees %}
+            <tr>
+                <td>
+                    {% if e.profile_photo %}<img class="photo" src="{{ e.profile_photo.url }}" alt="{{ e.name }}" />{%
+                    else %}—{% endif %}
+                </td>
+                <td>{{ e.name }}</td>
+                <td>{{ e.age }}</td>
+                <td>{{ e.department.name }}</td>
+                <td>{{ e.gender }}</td>
+                <td>{{ e.hobbies|join:", "|default:"—" }}</td>
+                <td>{{ e.email }}</td>
+                <td class="text-nowrap">
+                    <a class="btn btn-sm btn-outline-primary" href="{% url 'employee_update' e.pk %}">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" href="{% url 'employee_delete' e.pk %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center p-5">
+                    No employees yet. Create a department first, then add an employee.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
